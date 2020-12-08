@@ -481,6 +481,25 @@
                 }
             });
         }
+
+        //elfinder
+        var $hasElfinder = $(widgetOptionsRoot.widgetItem).find('.elfinderfl');
+        $hasElfinder.each(function(e){
+            var _this = $(this);
+            console.log(_this.attr('id'));
+            mihaildev.elFinder.register(_this.attr('id'), function(file, id){
+                $('#' + id).val(file.url).trigger('change', [file, id]);
+                return true;
+            });
+            $(document).on('click', '#'+_this.attr('id')+'_button', function(){
+                mihaildev.elFinder.openManager({
+                    "url":"/weadmin/elfinder/manager?filter=image&callback="+_this.attr('id')+"&lang=ru",
+                    "width":"auto",
+                    "height":"auto",
+                    "id":_this.attr('id')
+                });
+            });
+        });
     };
 
 })(window.jQuery);
