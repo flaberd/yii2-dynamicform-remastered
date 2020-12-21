@@ -430,6 +430,23 @@
             });
         }
 
+        // "kartik-v/yii2-widget-colorinput"  by flaberd
+        var $hasColorInput = $(widgetOptionsRoot.widgetItem).find('.spectrum-input');
+        if($hasColorInput.length > 0){
+            $hasColorInput.each(function () {
+                var id = '#' + $(this).attr('id');
+                var sourceID  = id + '-source';
+                kvInitHtml5(id,sourceID);
+                if (jQuery(id).data('spectrum')) {
+                    jQuery(id).spectrum('destroy');
+                }
+                jQuery.when(jQuery(sourceID).spectrum(spectrum_b2cfdef0)).done(function(){
+                    jQuery(sourceID).spectrum('set',jQuery(id).val());
+                    jQuery(sourceID).removeClass('kv-center-loading')
+                });
+            });
+        }
+
         // "kartik-v/yii2-widget-depdrop"
         var $hasDepdrop = $(widgetOptionsRoot.widgetItem).find('[data-krajee-depdrop]');
         if ($hasDepdrop.length > 0) {
@@ -486,7 +503,6 @@
         var $hasElfinder = $(widgetOptionsRoot.widgetItem).find('.elfinderfl');
         $hasElfinder.each(function(e){
             var _this = $(this);
-            console.log(_this.attr('id'));
             mihaildev.elFinder.register(_this.attr('id'), function(file, id){
                 $('#' + id).val(file.url).trigger('change', [file, id]);
                 return true;
